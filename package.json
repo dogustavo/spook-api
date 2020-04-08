@@ -6,13 +6,8 @@
   "author": "gustavo <gustavo.oliveira@atuo.in>",
   "license": "MIT",
   "scripts": {
-    "start": "DEBUG=app* NODE_ENV=homologation PORT=3003 nodemon app --ignore client/ --exec babel-node --presets es2015,stage-2",
-    "startdev": "DEBUG=app* NODE_ENV=development PORT=3001 nodemon app --ignore client/ --exec babel-node --presets es2015,stage-2",
-    "test": "snyk test",
-    "snyk-protect": "snyk protect",
-    "prepare": "yarn run snyk-protect",
-    "pre-build": "rm -rf build && mkdir build && cp package.json build/ && cp .babelrc build/ && cp -r config build/ && cp -r data build/ && cp -r public build/ && cp -r services build/ && cp -r views build/ && cd build/",
-    "build": "babel . -d build --presets es2015,stage-2 --ignore *-compiled*,*.js.map*,node_modules*"
+    "start": "nodemon src/server.js",
+    "test": "cross-env NODE_ENV=test jest"
   },
   "dependencies": {
     "cookie-parser": "^1.4.5",
