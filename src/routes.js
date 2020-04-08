@@ -3,9 +3,9 @@ const UserController = require('./controllers/UserController');
 
 const routes = express.Router();
 
-
+ 
 //User routes
-routes.get('/user',);
+routes.post('/user', UserController.store);
 
 
 //Book routes
