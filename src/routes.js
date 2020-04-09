@@ -11,7 +11,7 @@ routes.post('/user', UserController.store);
 
 
 //Book routes
-routes.get('/book', BookController.store);
+routes.post('/book', BookController.store);
 
 
 module.exports = routes; 

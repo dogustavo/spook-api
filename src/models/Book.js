@@ -18,7 +18,7 @@ const BookSchema = new Schema({
         required: true,
     },
     autor: {
-        type: Date,
+        type: String,
         required: true,
     },
     editora: {

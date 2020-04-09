@@ -3,14 +3,12 @@ const Book = require("../models/Book");
 module.exports = {
   async store (req, res){
     const { nome, condicao, foto, descricao, autor, editora } = req.body;
-    
-    const qtd = await Book.find(bo => bo);
-    if(qtd !== []){
-      return res.status(204).json({entro: "Não"});
-    } 
-    console.log(Book);
 
+    const qtd = await Book.find(bo => bo);
     
+    if(qtd.length != 0){
+      return res.status(204).json([]);
+    } 
     const BookNew = Book.create({
       bookImage: foto,
       nameBook: nome,
@@ -19,6 +17,7 @@ module.exports = {
       autor, 
       editora
     });
+
     return res.status(200).json({BookNew})
   },
 
