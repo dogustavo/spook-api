@@ -1,24 +1,33 @@
-const Book = require("../models/Book");
+const User = require('../models/User');
 
 module.exports = {
   async store (req, res){
-    const { nome, condicao, foto, descricao, autor, editora } = req.body;
 
-    const qtd = await Book.find(bo => bo);
+    const { 
+		bookImage,
+		nameBook,
+		description,
+		status,
+		autor, 
+		editora
+    } = req.body;
+
+    const qtd = await User.find(bo => bo);
     
     if(qtd.length != 0){
-      return res.status(204).json([]);
+		return res.status(204).json([]);
     } 
-    const BookNew = Book.create({
-      bookImage: foto,
-      nameBook: nome,
-      description: descricao,
-      condiction: condicao,
-      autor, 
-      editora
+
+    const book = User.create({
+		bookImage,
+		nameBook,
+		description,
+		status,
+		autor, 
+		editora
     });
 
-    return res.status(200).json({BookNew})
+    return res.status(200).json({book})
   },
 
 

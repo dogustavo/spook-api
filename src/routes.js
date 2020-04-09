@@ -14,4 +14,4 @@ routes.post('/user', UserController.store);
 routes.post('/book', BookController.store);
 
 
-module.exports = routes; 
+module.exports = routes;
