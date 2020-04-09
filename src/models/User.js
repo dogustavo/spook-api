@@ -1,6 +1,5 @@
 const { Schema, model } = require('mongoose');
 
-const BookSchema = require('../models/Book').schema;
 
 const UserSchema = new Schema({
     name: {
@@ -20,8 +19,33 @@ const UserSchema = new Schema({
         type: Date,
         required: true
     },
-    books: [BookSchema],
     avatar: String,
+    books: {
+        bookImage: {
+            type: String,
+            required: true,
+        },
+        nameBook: {
+            type: String,
+            required: true,
+        },
+        description: {
+            type: String,
+            required: true,  
+        },
+        status: {
+            type: String,
+            required: true,
+        },
+        autor: {
+            type: String,
+            required: true,
+        },
+        editora: {
+            type: String,
+            required: true,
+        },
+    }
 
 }, {
     timestamps: true,
