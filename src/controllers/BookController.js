@@ -9,7 +9,7 @@
 
 
 module.exports = {
-  async index (request, response){
+  async store (request, response){
     const alisson = request.query;
 
   },

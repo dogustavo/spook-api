@@ -11,13 +11,7 @@ routes.post('/user', UserController.store);
 
 
 //Book routes
-routes.get('/book', BookController.index);
-
-routes.post('/book', BookController.bow);
-
-routes.put('/book/:id', BookController.put);
-
-routes.delete('/book/:id', BookController.delete);
+routes.get('/book', BookController.store);
 
 
 module.exports = routes; 

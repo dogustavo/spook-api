@@ -20,7 +20,7 @@ const UserSchema = new Schema({
         type: Date,
         required: true
     },
-    books: BookSchema,
+    books: [BookSchema],
     avatar: String,
 
 }, {
