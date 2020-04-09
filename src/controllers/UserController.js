@@ -2,7 +2,7 @@ const User = require('../models/User');
 
 module.exports = {
 
-    async store(req, res) {
+    async create(req, res) {
         const { 
             name,
             email,

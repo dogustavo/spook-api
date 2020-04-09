@@ -7,11 +7,9 @@ const routes = express.Router();
 
  
 //User routes
-routes.post('/user', UserController.store);
+routes.post('/api/user', UserController.create);
 
-
-//Book routes
-routes.post('/book', BookController.store);
+routes.post('/api/:userId/book', BookController.create);
 
 
 module.exports = routes;
