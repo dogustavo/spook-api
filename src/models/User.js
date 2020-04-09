@@ -1,5 +1,7 @@
 const { Schema, model } = require('mongoose');
 
+const BookSchema = require('../models/Book').schema;
+
 const UserSchema = new Schema({
     name: {
         type: String,
@@ -18,10 +20,11 @@ const UserSchema = new Schema({
         type: Date,
         required: true
     },
+    books: [BookSchema],
     avatar: String,
 
 }, {
     timestamps: true,
-})
+});
 
 module.exports = model('User', UserSchema);

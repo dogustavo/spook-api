@@ -28,6 +28,7 @@ const BookSchema = new Schema({
 
 }, {
     timestamps: true,
-})
+});
+
 
 module.exports = model('Book', BookSchema);

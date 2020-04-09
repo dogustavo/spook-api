@@ -18,11 +18,11 @@ module.exports = {
         }
 
         const user = await User.create({
-            name: name,
-            email: email,
-            password: password,
-            data_nascimento: data_nascimento,
-            avatar: avatar 
+            name,
+            email,
+            password,
+            data_nascimento,
+            avatar 
         });
 
         return res.json(user);
