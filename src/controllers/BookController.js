@@ -65,16 +65,6 @@ module.exports = {
 			editora
 		});
 			
-		const user2 = await User.findOneAndUpdate({ _id: req.params.userId }, {
-			book: {
-				bookImage,
-				nameBook,
-				description,
-				condition,
-				autor, 
-				editora
-			});
-			
 			const user2 = await User.findOneAndUpdate({ _id: req.params.userId }, {
 				book: {
 					bookImage,
