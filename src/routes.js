@@ -7,7 +7,7 @@ const routes = express.Router();
 
  
 //User routes
-routes.post('/api/user', UserController.create);
+routes.post('/api/user/auth', UserController.create);
 
 routes.post('/api/:userId/book', BookController.create);
 
