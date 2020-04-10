@@ -22,7 +22,14 @@ module.exports = {
 	});
 	
 	const user = await User.findOneAndUpdate({ _id: req.params.userId }, {
-		book: book._id
+		book:  {
+			bookImage,
+			nameBook,
+			description,
+			condition,
+			autor, 
+			editora
+		} 
 	}, { new: true });
 
     return res.status(200).json({book, user})

@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const BookSchema = require('./Book');
+const BookSchema = require('./Book').schema;
 
 const UserSchema = new Schema({
     name: {
@@ -20,10 +20,7 @@ const UserSchema = new Schema({
         required: true
     },
     avatar: String,
-    book: {
-        ref: 'Book',
-        type: Schema.Types.ObjectId
-    }
+    book: BookSchema
 
 }, {
     timestamps: true,
