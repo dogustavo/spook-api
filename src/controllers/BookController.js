@@ -24,60 +24,51 @@ module.exports = {
 		});
 	
 		const user = await User.findOneAndUpdate({ _id: req.params.userId }, {
-			book: {
-				bookImage,
-				nameBook,
-				description,
-				condition,
-				autor, 
-				editora
-			} 
+			book: book
 		}, { new: true });
 
     	return res.status(200).json({book, user})
 	},
 	
 	async edit(req, res) {
-		
-    	const { 
-			bookImage,
-			nameBook,
-			description,
-			condition,
-			autor, 
-			editora
-		} = req.body;
-			
-		const book = await Book.findOneAndRemove(
-			{ _id : req.params.bookId}
-		);
 
-		const user = await User.findOneAndUpdate({ _id : req.params.userId}, {
-			book
-		}, { new: true });		
+			const {
+				userId, bookId
+			}= req.params
+
 			
-		const book2 = await Book.create({
-			bookImage,
-			nameBook,
-			description,
-			condition,
-			autor, 
-			editora
-		});
+    	const { 
+				bookImage,
+				nameBook,
+				description,
+				condition,
+				autor, 
+				editora
+			} = req.body;
 			
-			const user2 = await User.findOneAndUpdate({ _id: req.params.userId }, {
-				book: {
-					bookImage,
-					nameBook,
-					description,
-					condition,
-					autor, 
-					editora
-				} 
+			const book = await Book.findOneAndRemove({_id: bookId});
+			
+			const user = await User.findOneAndUpdate({_id: userId},{
+				book: book
+			},{new: true});		
+			
+			const book2 = await Book.create({
+				bookImage,
+				nameBook,
+				description,
+				condition,
+				autor, 
+				editora
+			});
+			
+			const user2 = await User.findOneAndUpdate({ _id: userId }, {
+				book: book2
 			}, { new: true });
-		
-				return res.status(204).json({book2, user2})
+			
+			console.log(book2, user2);
+		return res.status(200).json({book2, user2})
 	},
+
 	async delete(req, res){
 			const {
 				userId, bookId
