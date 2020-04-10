@@ -7,7 +7,8 @@ const app = express();
 
 mongoose.connect('mongodb+srv://spook:spook@cluster0-7tykh.mongodb.net/spook?retryWrites=true&w=majority', {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false
 });
 
 app.use(express.json());
