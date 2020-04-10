@@ -1,5 +1,6 @@
 const Book = require('../models/Book');
 const User = require('../models/User');
+
 module.exports = {
   async create(req, res) {
 
@@ -22,7 +23,7 @@ module.exports = {
 	});
 	
 	const user = await User.findOneAndUpdate({ _id: req.params.userId }, {
-		book:  {
+		book: {
 			bookImage,
 			nameBook,
 			description,
@@ -33,6 +34,8 @@ module.exports = {
 	}, { new: true });
 
     return res.status(200).json({book, user})
-  }
+  },
+
 
 }
+
