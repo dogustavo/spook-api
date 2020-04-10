@@ -18,7 +18,9 @@ module.exports = {
                 email,
                 password,
                 data_nascimento,
-                avatar 
+                avatar,
+				likes,
+				deslikes 
             } = req.body;
     
             if(await User.findOne({ email })) {
@@ -30,16 +32,14 @@ module.exports = {
                 email,
                 password,
                 data_nascimento,
-                avatar 
+                avatar,
+				likes,
+				deslikes 
             });
 
             user.password = undefined;
     
-            res.send({ 
-                user, 
-                token: generateToken({ id: user.id })   
-            });
-            
+            return res.json(user);
         } catch (error) {
             return res.status(400).send({ error: 'Falha no cadastro' });
         }

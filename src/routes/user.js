@@ -1,9 +1,12 @@
 const express = require('express');
 const UserController = require('../controllers/UserController');
+const LikeController = require('../controllers/LikeController');
 
 const routes = express.Router();
  
 routes.post('/create', UserController.create);
 routes.post('/auth', UserController.authenticate);
+
+routes.post('/:userId/likes', LikeController.store);
 
 module.exports = routes;

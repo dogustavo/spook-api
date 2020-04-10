@@ -23,7 +23,19 @@ const UserSchema = new Schema({
         required: true
     },
     avatar: String,
-    book: BookSchema
+    coordinates: {
+        type: [Number],
+        required: true
+    },
+    book: BookSchema,
+    likes: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+    dislikes: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }]
 
 }, {
     timestamps: true,
