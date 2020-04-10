@@ -4,7 +4,7 @@ const BookController = require('../controllers/BookController');
 
 const routes = express.Router();
 
-routes.post('/:userId', BookController.create);
+routes.post('/create/:userId', BookController.create);
 
 routes.put('/:userId/:bookId', BookController.edit);
 
