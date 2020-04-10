@@ -1,6 +1,14 @@
-const User = require('../models/User');
-
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
+const User = require('../models/User');
+const authConfig = require('../config/auth');
+
+function generateToken(params = {}) {
+    return jwt.sign(params, authConfig.secret, {
+        expiresIn: '30 days',
+    });
+}
 
 module.exports = {
     async create(req, res) {
@@ -27,7 +35,11 @@ module.exports = {
 
             user.password = undefined;
     
-            return res.json(user);
+            res.send({ 
+                user, 
+                token: generateToken({ id: user.id })   
+            });
+            
         } catch (error) {
             return res.status(400).send({ error: 'Falha no cadastro' });
         }
@@ -47,7 +59,12 @@ module.exports = {
             return res.status(400).send({ error: 'Senha inválida' });
         }
 
-        res.send({ user });
+        user.password = undefined;
+
+        res.send({ 
+            user, 
+            token: generateToken({ id: user.id })   
+        });
 
     }
 };
