@@ -75,6 +75,19 @@ module.exports = {
 				} 
 			}, { new: true });
 		
-				return res.status(200).json({book2, user2})
+				return res.status(204).json({book2, user2})
+	},
+	async delete(req, res){
+			const {
+				userId, bookId
+			}= req.params
+
+			const book = await Book.findOneAndRemove({_id: bookId});
+
+			const user = await User.findOneAndUpdate({_id: userId},{
+				book: book
+			},{new: true});
+
+			return res.status(204).json({});
 	}
 }

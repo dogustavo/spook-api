@@ -8,5 +8,7 @@ routes.post('/create/:userId', BookController.create);
 
 routes.put('/:userId/:bookId', BookController.edit);
 
+routes.delete('/:userId/:bookId', BookController.delete);
+
 
 module.exports = routes;
