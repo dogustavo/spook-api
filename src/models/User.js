@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const bcrypt = require('bcryptjs');
+const crypto = require('crypto')
 
 const BookSchema = require('./Book').schema;
 
@@ -10,8 +10,7 @@ const UserSchema = new Schema({
     },
     email: {
         type: String,
-        required: true,
-        lowercase: true  
+        required: true
     },
     password: {
         type: String,
@@ -23,29 +22,18 @@ const UserSchema = new Schema({
         required: true
     },
     avatar: String,
-    coordinates: {
-        type: [Number],
-        required: true
-    },
     book: BookSchema,
     likes: [{
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
     }],
     dislikes: [{
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
     }]
 
 }, {
     timestamps: true,
-});
-
-UserSchema.pre('save', async function(next){
-    const hash = await bcrypt.hash(this.password, 10);
-    this.password = hash;
-
-    next();
 });
 
 module.exports = model('User', UserSchema);
