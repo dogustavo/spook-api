@@ -94,5 +94,25 @@ module.exports = {
         }catch(error){
             return res.status(400).send({ error: 'Falha na edição' });
         }
+    },
+
+
+    async delete(req, res){
+        try{
+            const { userId } = req.params;
+
+            const user = await User.findOneAndRemove({_id: userId});
+            
+            res.status(204).send({});
+
+        } catch(error){
+
+            return res.status(400).send({ error: 'Falha na exclusão de usuário' });
+
+        }
+
+
+
     }
+
 };
