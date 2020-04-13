@@ -66,5 +66,33 @@ module.exports = {
             token: generateToken({ id: user.id })   
         });
 
+    },
+
+    async update(req, res) {
+        try {
+            const { 
+                name,
+                email,
+                password,
+                data_nascimento,
+                avatar 
+            } = req.body;
+
+            const { id } = req.params;
+
+            const user = await User.findOneAndUpdate({_id: id},{
+				name,
+                email,
+                password,
+                data_nascimento,
+                avatar
+            },{new: true});
+            
+            res.status(200).json({
+                user
+            })
+        }catch(error){
+            return res.status(400).send({ error: 'Falha na edição' });
+        }
     }
 };
