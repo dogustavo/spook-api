@@ -64,8 +64,7 @@ module.exports = {
 			const user2 = await User.findOneAndUpdate({ _id: userId }, {
 				book: book2
 			}, { new: true });
-			
-			console.log(book2, user2);
+		
 		return res.status(200).json({book2, user2})
 	},
 
@@ -83,3 +82,8 @@ module.exports = {
 			return res.status(204).json({});
 	}
 }
+
+
+
+
+

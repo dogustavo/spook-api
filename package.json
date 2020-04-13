@@ -10,6 +10,11 @@
     "test": "cross-env NODE_ENV=test jest"
   },
   "dependencies": {
+<<<<<<< HEAD
+=======
+    "axios": "^0.19.2",
+    "bcryptjs": "^2.4.3",
+>>>>>>> 54558e9b93bee871588e906d0b3fcd2966ab853a
     "cookie-parser": "^1.4.5",
     "crypto": "^1.0.1",
     "express": "^4.17.1",
