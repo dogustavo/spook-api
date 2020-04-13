@@ -9,5 +9,6 @@ routes.post('/auth', UserController.authenticate);
 routes.put('/update/:id', UserController.update);
 
 routes.post('/:userId/likes', LikeController.store);
+routes.delete('/:userId', UserController.delete);
 
 module.exports = routes;
