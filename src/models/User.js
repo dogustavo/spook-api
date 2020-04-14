@@ -1,9 +1,5 @@
 const { Schema, model } = require('mongoose');
-<<<<<<< HEAD
 var crypto = require('crypto'); 
-=======
-const crypto = require('crypto')
->>>>>>> 0e3fff2d188bbfc241f87127f10981a1ba65a963
 
 const BookSchema = require('./Book').schema;
 
@@ -34,7 +30,18 @@ const UserSchema = new Schema({
     dislikes: [{
         type: Schema.Types.ObjectId,
         ref: 'User',
-    }]
+    }],
+    geometry: {
+        type: {
+            type: String,
+            defautl: "Point"
+        },
+        coordinates:{
+            type: [Number],
+            // index: '2dsphere'
+        },
+        required: true
+      }
 
 }, {
     timestamps: true,
