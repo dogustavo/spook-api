@@ -1,9 +1,5 @@
 const { Schema, model } = require('mongoose');
-<<<<<<< HEAD
 var crypto = require('crypto'); 
-=======
-const crypto = require('crypto')
->>>>>>> 0e3fff2d188bbfc241f87127f10981a1ba65a963
 
 const BookSchema = require('./Book').schema;
 
