@@ -11,6 +11,22 @@ function generateToken(params = {}) {
 }
 
 module.exports = {
+    async index(req, res) {
+        const { user } = req.headers;
+
+        const loggedUser = await User.findById(user);
+
+        const users = await User.find({
+            $and: [
+                { _id: { $ne: user } },
+                { _id: { $nin: loggedUser.likes } },
+                { _id: { $nin: loggedUser.dislikes } }
+            ],
+        })
+
+        return res.json(users);
+    },
+
     async create(req, res) {
         try {
             const { 

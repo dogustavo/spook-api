@@ -17,7 +17,6 @@ module.exports = {
             
         }
 
-    
         loggedUser.likes.push(targetUser._id);
         
         await loggedUser.save();
