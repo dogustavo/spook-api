@@ -1,4 +1,4 @@
-const bcrypt = require('bcryptjs');
+// const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/User');
@@ -26,22 +26,31 @@ module.exports = {
             if(await User.findOne({ email })) {
                 return res.status(400).send({ error: 'Este email já está sendo utilizado' });
             }
-    
-            const user = await User.create({
-                name,
-                email,
-                password,
-                data_nascimento,
-                avatar,
-				likes,
-				deslikes 
-            });
 
-            user.password = undefined;
-    
-            return res.json(user);
+            let newUser = new User(); 
+
+            newUser.name = req.body.name, 
+            newUser.email = req.body.email 
+            newUser.data_nascimento = req.body.data_nascimento
+            newUser.avatar = req.body.avatar
+            newUser.likes = req.body.likes
+            newUser.deslikes = req.body.deslikes
+            newUser.setPassword(req.body.password); 
+
+            newUser.save((err, User) => { 
+                if (err) { 
+                    return res.status(400).send({ 
+                        message : "Falha ao cadastrar usuário."
+                    }); 
+                } 
+                else { 
+                    return res.status(200).send({ 
+                        message : "Usuário cadastrado com sucesso."
+                    }); 
+                } 
+            }); 
         } catch (error) {
-            return res.status(400).send({ error: 'Falha no cadastro' });
+            // return res.status(400).send({ error: 'Falha no cadastro' });
         }
         
     },
@@ -49,17 +58,35 @@ module.exports = {
     async authenticate(req, res) {
         const { email, password } = req.body;
 
-        const user = await User.findOne({ email }).select('+password');
+        // const user = await User.findOne({ email }).select('+password');
 
-        if(!user) {
-            return res.status(400).send({ error: 'Usuário não encontrado' });
-        }
+        // if(!user) {
+        //     return res.status(400).send({ error: 'Usuário não encontrado' });
+        // }
 
-        if(!await bcrypt.compare(password, user.password)){
-            return res.status(400).send({ error: 'Senha inválida' });
-        }
+        // if(!await bcrypt.compare(password, user.password)){
+        //     return res.status(400).send({ error: 'Senha inválida' });
+        // }
 
-        user.password = undefined;
+        // user.password = undefined;
+
+        User.findOne({ email}, function(err, user){
+            if(user === null){
+                return res.status(400).send({
+                    message: "User not found"
+                });
+            }
+            if(user.validPassword(password)){
+                return res.status(201).send({
+                    message: "User Logged In"
+                })
+            }else{
+                return res.status(400).send({
+                    message: "Wrong Password"
+                })
+            }
+        })
+
 
         res.send({ 
             user, 

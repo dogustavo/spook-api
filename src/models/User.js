@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const bcrypt = require('bcryptjs');
+var crypto = require('crypto'); 
 
 const BookSchema = require('./Book').schema;
 
@@ -16,8 +16,8 @@ const UserSchema = new Schema({
     password: {
         type: String,
         required: true,
-        select: false,
     },
+    salt: String,
     data_nascimento: {
         type: Date,
         required: true
@@ -41,11 +41,17 @@ const UserSchema = new Schema({
     timestamps: true,
 });
 
-UserSchema.pre('save', async function(next){
-    const hash = await bcrypt.hash(this.password, 10);
-    this.password = hash;
+UserSchema.methods.setPassword = function(pass) { 
+       this.salt = crypto.randomBytes(16).toString('hex');   
+       this.password = crypto.pbkdf2Sync(pass, this.salt,  
+       1000, 64, `sha512`).toString(`hex`); 
+};
 
-    next();
-});
+UserSchema.methods.validPassword = function(password) { 
+    var variavel = crypto.pbkdf2Sync(password,  
+    this.salt, 1000, 64, `sha512`).toString(`hex`); 
+    return this.password === variavel; 
+}; 
+
 
 module.exports = model('User', UserSchema);
