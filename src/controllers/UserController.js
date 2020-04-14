@@ -11,6 +11,22 @@ function generateToken(params = {}) {
 }
 
 module.exports = {
+    async index(req, res) {
+        const { user } = req.headers;
+
+        const loggedUser = await User.findById(user);
+
+        const users = await User.find({
+            $and: [
+                { _id: { $ne: user } },
+                { _id: { $nin: loggedUser.likes } },
+                { _id: { $nin: loggedUser.dislikes } }
+            ],
+        })
+
+        return res.json(users);
+    },
+
     async create(req, res) {
         try {
             const { 
@@ -29,28 +45,20 @@ module.exports = {
 
             let newUser = new User(); 
 
-            newUser.name = req.body.name, 
-            newUser.email = req.body.email 
-            newUser.data_nascimento = req.body.data_nascimento
-            newUser.avatar = req.body.avatar
-            newUser.likes = req.body.likes
-            newUser.deslikes = req.body.deslikes
-            newUser.setPassword(req.body.password); 
+            newUser.name = name, 
+            newUser.email = email 
+            newUser.data_nascimento = data_nascimento
+            newUser.avatar = avatar
+            newUser.likes = likes
+            newUser.deslikes = deslikes
+            newUser.setPassword(password); 
 
-            newUser.save((err, User) => { 
-                if (err) { 
-                    return res.status(400).send({ 
-                        message : "Falha ao cadastrar usuário."
-                    }); 
-                } 
-                else { 
-                    return res.status(200).send({ 
-                        message : "Usuário cadastrado com sucesso."
-                    }); 
-                } 
-            }); 
+            newUser.save();
+
+            return res.json(newUser);
+
         } catch (error) {
-            // return res.status(400).send({ error: 'Falha no cadastro' });
+            return res.status(400).send({ error: 'Falha no cadastro' });
         }
         
     },
@@ -58,36 +66,16 @@ module.exports = {
     async authenticate(req, res) {
         const { email, password } = req.body;
 
-        // const user = await User.findOne({ email }).select('+password');
+        const user = await User.findOne({ email }).select('+password');
 
-        // if(!user) {
-        //     return res.status(400).send({ error: 'Usuário não encontrado' });
-        // }
+        if(!user) {
+            return res.status(400).send({ error: 'Usuário não encontrado' });
+        }
 
-        // if(!await bcrypt.compare(password, user.password)){
-        //     return res.status(400).send({ error: 'Senha inválida' });
-        // }
-
-        // user.password = undefined;
-
-        User.findOne({ email}, function(err, user){
-            if(user === null){
-                return res.status(400).send({
-                    message: "User not found"
-                });
-            }
-            if(user.validPassword(password)){
-                return res.status(201).send({
-                    message: "User Logged In"
-                })
-            }else{
-                return res.status(400).send({
-                    message: "Wrong Password"
-                })
-            }
-        })
-
-
+        if(!await user.validPassword(password)){
+            return res.status(400).send({ error: 'Senha inválida' });
+        }
+        
         res.send({ 
             user, 
             token: generateToken({ id: user.id })   

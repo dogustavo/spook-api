@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const user = require('./src/routes/user');
 const book = require('./src/routes/book');
 const authMiddleware = require('./src/middleware/auth');
@@ -11,6 +12,8 @@ mongoose.connect('mongodb+srv://spook:spook@cluster0-7tykh.mongodb.net/spook?ret
     useUnifiedTopology: true,
     useFindAndModify: false
 });
+
+app.use(cors());
 
 app.use(express.json());
 

@@ -11,13 +11,8 @@ module.exports = {
         if(!targetUser) {
             return res.status(400).send({ error: 'Livro não existe' });
         }
-
-        if(targetUser.likes.includes(loggedUser._id)) {
-            console.log('DEU MATCH');
-            
-        }
-
-        loggedUser.likes.push(targetUser._id);
+    
+        loggedUser.dislikes.push(targetUser._id);
         
         await loggedUser.save();
 
