@@ -1,4 +1,3 @@
-// const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/User');
@@ -13,28 +12,26 @@ function generateToken(params = {}) {
 module.exports = {
     async index(req, res) {
         const { user } = req.headers;
-        const { lng, lat, dista } = req.query;
-        console.log(dista);
+        const { lng, lat, distance } = req.query;
+        
         const loggedUser = await User.findById(user);
 
-        // const users = await User.find({
-        //     $and: [
-        //         { _id: { $ne: user } },
-        //         { _id: { $nin: loggedUser.likes } },
-        //         { _id: { $nin: loggedUser.dislikes } }
-        //     ],
-        // });
-        const a = await User.aggregate([{
+        const users = await User.aggregate([{
             $geoNear: {
                 near: { type: "point", coordinates: [ parseFloat(lng), parseFloat(lat) ] },
                 distanceField: "dist.calculated",
-                maxDistance: parseFloat(dista),
-                spherical: true
-             }
-         }])
+                maxDistance: parseFloat(distance),
+                spherical: true,
+                $and: [
+                    { _id: { $ne: user } },
+                    { _id: { $nin: loggedUser.likes } },
+                    { _id: { $nin: loggedUser.dislikes } }
+                ]
+            }
+        }]);
 
 
-        res.send({a})
+        res.send({users})
     },
 
     async create(req, res) {
