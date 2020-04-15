@@ -1,7 +1,10 @@
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/User');
+const Book = require('../models/Book');
+
 const authConfig = require('../config/auth');
+
 
 function generateToken(params = {}) {
     return jwt.sign(params, authConfig.secret, {
@@ -123,11 +126,13 @@ module.exports = {
 
     async delete(req, res){
         try{
-            const { userId } = req.params;
+            const { userId, bookId} = req.params;
 
-            const user = await User.findOneAndRemove({_id: userId});
+            await User.findOneAndRemove({_id: userId});
+            await Book.findOneAndRemove({_id: bookId});
+
             
-            res.status(204).send({});
+            return res.send({ mensagem: 'Usuário excluido com sucesso!'});
 
         } catch(error){
 

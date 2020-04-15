@@ -12,7 +12,7 @@ routes.put('/update/:id', UserController.update);
 
 routes.post('/:userId/likes', LikeController.store);
 routes.post('/:userId/dislikes', DislikeController.store);
-routes.delete('/:userId', UserController.delete);
+routes.delete('/:userId/:bookId', UserController.delete);
 
 routes.post('/findBooks', LocaleController.find);
 
