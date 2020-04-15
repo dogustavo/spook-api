@@ -13,18 +13,28 @@ function generateToken(params = {}) {
 module.exports = {
     async index(req, res) {
         const { user } = req.headers;
-
+        const { lng, lat, dista } = req.query;
+        console.log(dista);
         const loggedUser = await User.findById(user);
 
-        const users = await User.find({
-            $and: [
-                { _id: { $ne: user } },
-                { _id: { $nin: loggedUser.likes } },
-                { _id: { $nin: loggedUser.dislikes } }
-            ],
-        })
+        // const users = await User.find({
+        //     $and: [
+        //         { _id: { $ne: user } },
+        //         { _id: { $nin: loggedUser.likes } },
+        //         { _id: { $nin: loggedUser.dislikes } }
+        //     ],
+        // });
+        const a = await User.aggregate([{
+            $geoNear: {
+                near: { type: "point", coordinates: [ parseFloat(lng), parseFloat(lat) ] },
+                distanceField: "dist.calculated",
+                maxDistance: parseFloat(dista),
+                spherical: true
+             }
+         }])
 
-        return res.json(users);
+
+        res.send({a})
     },
 
     async create(req, res) {
@@ -36,7 +46,8 @@ module.exports = {
                 data_nascimento,
                 avatar,
 				likes,
-				deslikes 
+                deslikes,
+                geometry
             } = req.body;
     
             if(await User.findOne({ email })) {
@@ -51,6 +62,7 @@ module.exports = {
             newUser.avatar = avatar
             newUser.likes = likes
             newUser.deslikes = deslikes
+            newUser.geometry = geometry
             newUser.setPassword(password); 
 
             newUser.save();

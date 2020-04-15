@@ -2,6 +2,7 @@ const { Schema, model } = require('mongoose');
 var crypto = require('crypto'); 
 
 const BookSchema = require('./Book').schema;
+const LocationSchema = require('./Location').schema;
 
 const UserSchema = new Schema({
     name: {
@@ -31,17 +32,7 @@ const UserSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User',
     }],
-    geometry: {
-        type: {
-            type: String,
-            defautl: "Point"
-        },
-        coordinates:{
-            type: [Number],
-            // index: '2dsphere'
-        },
-        required: true
-      }
+    geometry: LocationSchema
 
 }, {
     timestamps: true,
