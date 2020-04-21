@@ -24,4 +24,4 @@ app.use('/user', user);
 
 app.use('/book', authMiddleware, book);
  
-app.listen(3001);
+app.listen(process.env.PORT || 3001);
