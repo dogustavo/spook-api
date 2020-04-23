@@ -43,7 +43,7 @@ module.exports = {
                 name,
                 email,
                 password,
-                data_nascimento,
+                age,
                 avatar,
 				likes,
                 deslikes,
@@ -58,7 +58,7 @@ module.exports = {
 
             newUser.name = name, 
             newUser.email = email 
-            newUser.data_nascimento = data_nascimento
+            newUser.age = age
             newUser.avatar = avatar
             newUser.likes = likes
             newUser.deslikes = deslikes
@@ -101,7 +101,7 @@ module.exports = {
                 name,
                 email,
                 password,
-                data_nascimento,
+                age,
                 avatar 
             } = req.body;
 
@@ -111,7 +111,7 @@ module.exports = {
 				name,
                 email,
                 password,
-                data_nascimento,
+                age,
                 avatar
             },{new: true});
             

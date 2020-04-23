@@ -18,8 +18,8 @@ const UserSchema = new Schema({
         required: true,
     },
     salt: String,
-    data_nascimento: {
-        type: Date,
+    age: {
+        type: Number,
         required: true
     },
     avatar: String,
