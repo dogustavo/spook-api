@@ -2,7 +2,6 @@ const { Schema, model } = require('mongoose');
 var crypto = require('crypto'); 
 
 const BookSchema = require('./Book').schema;
-const LocationSchema = require('./Location').schema;
 
 const UserSchema = new Schema({
     name: {
@@ -18,8 +17,8 @@ const UserSchema = new Schema({
         required: true,
     },
     salt: String,
-    age: {
-        type: Number,
+    data_nascimento: {
+        type: Date,
         required: true
     },
     avatar: String,
@@ -32,8 +31,6 @@ const UserSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User',
     }]
-    // geometry: LocationSchema
-
 }, {
     timestamps: true,
 });

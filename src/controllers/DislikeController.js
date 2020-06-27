@@ -11,27 +11,20 @@ module.exports = {
         if(!targetUser) {
             return res.status(400).send({ error: 'Livro não existe' });
         }
-
-        if(targetUser.likes.includes(loggedUser._id)){
-            let newLikes = [];
-            targetUser.likes.map(like => {
-                if(like != user){
-                    newLikes.push(like);
-                }
-            })
-
-            targetUser.
-        }
     
-        // console.log(targetUser.likes);
-
-
-        // loggedUser.dislikes.push(targetUser._id);
+        loggedUser.dislikes.push(targetUser._id);
         
-        // await loggedUser.save();
+        await loggedUser.save();
 
         return res.json(loggedUser);
         
     }
+    
+    // console.log(targetUser.likes);
+
+
+    // loggedUser.dislikes.push(targetUser._id);
+    
+    // await loggedUser.save();
 }
 

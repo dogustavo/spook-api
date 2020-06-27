@@ -15,26 +15,18 @@ function generateToken(params = {}) {
 module.exports = {
     async index(req, res) {
         const { user } = req.headers;
-        const { lng, lat, distance } = req.query;
-        
+
         const loggedUser = await User.findById(user);
 
-        const users = await User.aggregate([{
-            $geoNear: {
-                near: { type: "point", coordinates: [ parseFloat(lng), parseFloat(lat) ] },
-                distanceField: "dist.calculated",
-                maxDistance: parseFloat(distance),
-                spherical: true,
-                $and: [
-                    { _id: { $ne: user } },
-                    { _id: { $nin: loggedUser.likes } },
-                    { _id: { $nin: loggedUser.dislikes } }
-                ]
-            }
-        }]);
+        const users = await User.find({
+            $and: [
+                { _id: { $ne: user } },
+                { _id: { $nin: loggedUser.likes } },
+                { _id: { $nin: loggedUser.dislikes } }
+            ],
+        })
 
-
-        res.send({users})
+        return res.json(users);
     },
 
     async create(req, res) {
@@ -43,11 +35,10 @@ module.exports = {
                 name,
                 email,
                 password,
-                age,
+                data_nascimento,
                 avatar,
 				likes,
-                deslikes,
-                // geometry
+				deslikes 
             } = req.body;
     
             if(await User.findOne({ email })) {
@@ -58,11 +49,10 @@ module.exports = {
 
             newUser.name = name, 
             newUser.email = email 
-            newUser.age = age
+            newUser.data_nascimento = data_nascimento
             newUser.avatar = avatar
-            newUser.likes = likes
-            newUser.deslikes = deslikes
-            // newUser.geometry = geometry
+            // newUser.likes = likes
+            // newUser.deslikes = deslikes
             newUser.setPassword(password); 
 
             newUser.save();
@@ -138,8 +128,6 @@ module.exports = {
             return res.status(400).send({ error: 'Falha na exclusão de usuário' });
 
         }
-
-
 
     }
 
