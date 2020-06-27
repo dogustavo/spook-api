@@ -31,8 +31,8 @@ const UserSchema = new Schema({
     dislikes: [{
         type: Schema.Types.ObjectId,
         ref: 'User',
-    }],
-    geometry: LocationSchema
+    }]
+    // geometry: LocationSchema
 
 }, {
     timestamps: true,

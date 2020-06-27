@@ -47,7 +47,7 @@ module.exports = {
                 avatar,
 				likes,
                 deslikes,
-                geometry
+                // geometry
             } = req.body;
     
             if(await User.findOne({ email })) {
@@ -62,7 +62,7 @@ module.exports = {
             newUser.avatar = avatar
             newUser.likes = likes
             newUser.deslikes = deslikes
-            newUser.geometry = geometry
+            // newUser.geometry = geometry
             newUser.setPassword(password); 
 
             newUser.save();
@@ -78,7 +78,7 @@ module.exports = {
     async authenticate(req, res) {
         const { email, password } = req.body;
 
-        const user = await User.findOne({ email }).select('+password');
+        let user = await User.findOne({ email }).select('+password');
 
         if(!user) {
             return res.status(400).send({ error: 'Usuário não encontrado' });
@@ -88,6 +88,7 @@ module.exports = {
             return res.status(400).send({ error: 'Senha inválida' });
         }
         
+
         res.send({ 
             user, 
             token: generateToken({ id: user.id })   
@@ -100,7 +101,6 @@ module.exports = {
             const { 
                 name,
                 email,
-                password,
                 age,
                 avatar 
             } = req.body;
@@ -110,7 +110,6 @@ module.exports = {
             const user = await User.findOneAndUpdate({_id: id},{
 				name,
                 email,
-                password,
                 age,
                 avatar
             },{new: true});
