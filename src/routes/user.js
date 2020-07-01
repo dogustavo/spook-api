@@ -3,7 +3,7 @@ const UserController = require('../controllers/UserController');
 const LikeController = require('../controllers/LikeController');
 const DislikeController = require('../controllers/DislikeController');
 const LocaleController = require('../controllers/LocaleController');
-
+//teste
 const routes = express.Router();
  
 routes.post('/create', UserController.create);
