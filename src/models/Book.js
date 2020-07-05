@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 const UserSchema = require('./User');
-
+//bookModel
 const BookSchema = new Schema({
     bookImage: {
         type: String,
